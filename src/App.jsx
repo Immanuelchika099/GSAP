@@ -5,11 +5,15 @@ import './App.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
+const controllerImage =
+  'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Gamer_Controller.jpg/1280px-Gamer_Controller.jpg'
+
 function App() {
   const app = useRef(null)
   const hero = useRef(null)
   const card = useRef(null)
   const circle = useRef(null)
+  const slices = useRef([])
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -42,6 +46,22 @@ function App() {
         x: 300,
         rotation: 360,
         ease: 'none',
+      })
+
+      gsap.to(slices.current, {
+        scrollTrigger: {
+          trigger: '.slice-section',
+          start: 'top top',
+          end: '+=180%',
+          scrub: 1,
+          pin: true,
+        },
+        x: (index) => (index - 2) * 190,
+        y: (index) => Math.abs(index - 2) * 45,
+        rotation: (index) => (index - 2) * 5,
+        scale: 0.92,
+        ease: 'power2.inOut',
+        stagger: 0.04,
       })
     }, app)
 
@@ -81,8 +101,32 @@ function App() {
         </div>
       </section>
 
+      <section className="slice-section">
+        <div className="slice-heading">
+          <p>03 · Image Slicing</p>
+          <h2>Break it apart.</h2>
+          <span>Keep scrolling ↓</span>
+        </div>
+
+        <div className="slice-stage">
+          {[0, 1, 2, 3, 4].map((index) => (
+            <div
+              key={index}
+              ref={(element) => {
+                slices.current[index] = element
+              }}
+              className="image-slice"
+              style={{
+                backgroundImage: `url(${controllerImage})`,
+                backgroundPosition: `${index * 25}% center`,
+              }}
+            />
+          ))}
+        </div>
+      </section>
+
       <section className="end-section">
-        <p>That&apos;s your first scroll animation.</p>
+        <p>That&apos;s your first sliced-image animation.</p>
         <h2>Now we can make it crazy.</h2>
       </section>
     </main>
