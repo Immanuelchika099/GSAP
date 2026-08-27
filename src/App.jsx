@@ -8,12 +8,31 @@ gsap.registerPlugin(ScrollTrigger)
 const controllerImage =
   'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Gamer_Controller.jpg/1280px-Gamer_Controller.jpg'
 
+const fragments = [
+  { clip: 'polygon(0 0, 25% 0, 24% 25%, 0 28%)', x: -360, y: -250, r: -18 },
+  { clip: 'polygon(25% 0, 50% 0, 48% 25%, 24% 25%)', x: -130, y: -330, r: 14 },
+  { clip: 'polygon(50% 0, 75% 0, 76% 25%, 48% 25%)', x: 120, y: -310, r: -12 },
+  { clip: 'polygon(75% 0, 100% 0, 100% 28%, 76% 25%)', x: 370, y: -230, r: 20 },
+  { clip: 'polygon(0 28%, 24% 25%, 25% 50%, 0 52%)', x: -430, y: -40, r: 11 },
+  { clip: 'polygon(24% 25%, 48% 25%, 50% 50%, 25% 50%)', x: -150, y: -80, r: -8 },
+  { clip: 'polygon(48% 25%, 76% 25%, 75% 50%, 50% 50%)', x: 160, y: -70, r: 9 },
+  { clip: 'polygon(76% 25%, 100% 28%, 100% 52%, 75% 50%)', x: 430, y: -20, r: -14 },
+  { clip: 'polygon(0 52%, 25% 50%, 24% 76%, 0 74%)', x: -390, y: 80, r: -16 },
+  { clip: 'polygon(25% 50%, 50% 50%, 48% 76%, 24% 76%)', x: -120, y: 90, r: 10 },
+  { clip: 'polygon(50% 50%, 75% 50%, 76% 76%, 48% 76%)', x: 120, y: 100, r: -11 },
+  { clip: 'polygon(75% 50%, 100% 52%, 100% 74%, 76% 76%)', x: 400, y: 70, r: 16 },
+  { clip: 'polygon(0 74%, 24% 76%, 25% 100%, 0 100%)', x: -340, y: 290, r: 17 },
+  { clip: 'polygon(24% 76%, 48% 76%, 50% 100%, 25% 100%)', x: -100, y: 320, r: -13 },
+  { clip: 'polygon(48% 76%, 76% 76%, 75% 100%, 50% 100%)', x: 130, y: 310, r: 12 },
+  { clip: 'polygon(76% 76%, 100% 74%, 100% 100%, 75% 100%)', x: 360, y: 270, r: -18 },
+]
+
 function App() {
   const app = useRef(null)
   const hero = useRef(null)
   const card = useRef(null)
   const circle = useRef(null)
-  const slices = useRef([])
+  const fragmentsRef = useRef([])
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -48,20 +67,27 @@ function App() {
         ease: 'none',
       })
 
-      gsap.to(slices.current, {
+      const tl = gsap.timeline({
         scrollTrigger: {
           trigger: '.slice-section',
           start: 'top top',
-          end: '+=180%',
+          end: '+=220%',
           scrub: 1,
           pin: true,
         },
-        x: (index) => (index - 2) * 190,
-        y: (index) => Math.abs(index - 2) * 45,
-        rotation: (index) => (index - 2) * 5,
-        scale: 0.92,
+      })
+
+      tl.to(fragmentsRef.current, {
+        x: (index) => fragments[index].x,
+        y: (index) => fragments[index].y,
+        rotation: (index) => fragments[index].r,
+        scale: 0.72,
+        duration: 1,
         ease: 'power2.inOut',
-        stagger: 0.04,
+        stagger: {
+          each: 0.025,
+          from: 'center',
+        },
       })
     }, app)
 
@@ -103,22 +129,22 @@ function App() {
 
       <section className="slice-section">
         <div className="slice-heading">
-          <p>03 · Image Slicing</p>
-          <h2>Break it apart.</h2>
+          <p>03 · Image Reconstruction</p>
+          <h2>Scatter it.</h2>
           <span>Keep scrolling ↓</span>
         </div>
 
-        <div className="slice-stage">
-          {[0, 1, 2, 3, 4].map((index) => (
+        <div className="fragment-stage">
+          {fragments.map((fragment, index) => (
             <div
               key={index}
               ref={(element) => {
-                slices.current[index] = element
+                fragmentsRef.current[index] = element
               }}
-              className="image-slice"
+              className="image-fragment"
               style={{
                 backgroundImage: `url(${controllerImage})`,
-                backgroundPosition: `${index * 25}% center`,
+                clipPath: fragment.clip,
               }}
             />
           ))}
@@ -126,8 +152,8 @@ function App() {
       </section>
 
       <section className="end-section">
-        <p>That&apos;s your first sliced-image animation.</p>
-        <h2>Now we can make it crazy.</h2>
+        <p>The controller has been scattered.</p>
+        <h2>Now we can reverse it.</h2>
       </section>
     </main>
   )
