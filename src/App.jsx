@@ -134,17 +134,27 @@ function App() {
           <span>Keep scrolling ↓</span>
         </div>
 
-        <div className="fragment-stage">
+        <div className="slice-stage">
           {fragments.map((fragment, index) => (
             <div
               key={index}
               ref={(element) => {
                 fragmentsRef.current[index] = element
               }}
-              className="image-fragment"
+              className="image-slice"
               style={{
+                position: 'absolute',
+                inset: 0,
+                width: '100%',
+                height: '100%',
                 backgroundImage: `url(${controllerImage})`,
+                backgroundSize: '100% 100%',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
                 clipPath: fragment.clip,
+                borderRadius: 0,
+                willChange: 'transform',
+                transformOrigin: 'center',
               }}
             />
           ))}
