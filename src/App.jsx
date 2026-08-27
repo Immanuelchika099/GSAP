@@ -1,121 +1,91 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
+import { useLayoutEffect, useRef } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './App.css'
 
+gsap.registerPlugin(ScrollTrigger)
+
 function App() {
-  const [count, setCount] = useState(0)
+  const app = useRef(null)
+  const hero = useRef(null)
+  const card = useRef(null)
+  const circle = useRef(null)
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(hero.current, {
+        opacity: 0,
+        y: 80,
+        duration: 1.2,
+        ease: 'power3.out',
+      })
+
+      gsap.from(card.current, {
+        scrollTrigger: {
+          trigger: card.current,
+          start: 'top 80%',
+          end: 'top 30%',
+          scrub: 1,
+        },
+        opacity: 0,
+        y: 120,
+        scale: 0.85,
+      })
+
+      gsap.to(circle.current, {
+        scrollTrigger: {
+          trigger: circle.current,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1,
+        },
+        x: 300,
+        rotation: 360,
+        ease: 'none',
+      })
+    }, app)
+
+    return () => ctx.revert()
+  }, [])
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <main ref={app}>
+      <section className="hero-section">
+        <div ref={hero} className="hero-content">
+          <p className="eyebrow">GSAP + React</p>
+          <h1>Scroll into motion.</h1>
+          <p>Scroll down and watch the elements respond to your movement.</p>
+          <span className="scroll-hint">Scroll ↓</span>
         </div>
-        <div>
-          <h1>Get started</h1>
+      </section>
+
+      <section className="animation-section">
+        <div ref={card} className="animation-card">
+          <span>01</span>
+          <h2>ScrollTrigger</h2>
           <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
+            This card enters the viewport with a smooth reveal controlled by
+            your scroll position.
           </p>
         </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
       </section>
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
+      <section className="motion-section">
+        <div ref={circle} className="motion-circle" />
+        <div className="motion-content">
+          <span>02</span>
+          <h2>Motion follows you.</h2>
+          <p>
+            The circle moves and rotates as you scroll through this section.
+          </p>
         </div>
       </section>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+      <section className="end-section">
+        <p>That&apos;s your first scroll animation.</p>
+        <h2>Now we can make it crazy.</h2>
+      </section>
+    </main>
   )
 }
 
