@@ -5,33 +5,23 @@ import './App.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const wigImage = 'https://pngimg.com/d/wig_PNG6.png'
-
-const fragments = [
-  { clip: 'polygon(0 0, 25% 0, 23% 24%, 0 27%)', x: -300, y: -260, r: -16 },
-  { clip: 'polygon(25% 0, 50% 0, 49% 24%, 23% 24%)', x: -95, y: -330, r: 11 },
-  { clip: 'polygon(50% 0, 75% 0, 77% 24%, 49% 24%)', x: 110, y: -310, r: -9 },
-  { clip: 'polygon(75% 0, 100% 0, 100% 27%, 77% 24%)', x: 320, y: -230, r: 18 },
-  { clip: 'polygon(0 27%, 23% 24%, 25% 51%, 0 50%)', x: -390, y: -40, r: 12 },
-  { clip: 'polygon(23% 24%, 49% 24%, 50% 51%, 25% 51%)', x: -125, y: -65, r: -7 },
-  { clip: 'polygon(49% 24%, 77% 24%, 75% 51%, 50% 51%)', x: 125, y: -55, r: 8 },
-  { clip: 'polygon(77% 24%, 100% 27%, 100% 50%, 75% 51%)', x: 390, y: -25, r: -13 },
-  { clip: 'polygon(0 50%, 25% 51%, 24% 76%, 0 74%)', x: -360, y: 85, r: -15 },
-  { clip: 'polygon(25% 51%, 50% 51%, 49% 76%, 24% 76%)', x: -110, y: 95, r: 9 },
-  { clip: 'polygon(50% 51%, 75% 51%, 76% 76%, 49% 76%)', x: 115, y: 105, r: -10 },
-  { clip: 'polygon(75% 51%, 100% 50%, 100% 74%, 76% 76%)', x: 360, y: 70, r: 15 },
-  { clip: 'polygon(0 74%, 24% 76%, 25% 100%, 0 100%)', x: -290, y: 270, r: 17 },
-  { clip: 'polygon(24% 76%, 49% 76%, 50% 100%, 25% 100%)', x: -90, y: 315, r: -12 },
-  { clip: 'polygon(49% 76%, 76% 76%, 75% 100%, 50% 100%)', x: 105, y: 300, r: 13 },
-  { clip: 'polygon(76% 76%, 100% 74%, 100% 100%, 75% 100%)', x: 300, y: 250, r: -19 },
-]
+const laptopImage =
+  'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=1400&q=85'
 
 function App() {
   const app = useRef(null)
   const hero = useRef(null)
   const card = useRef(null)
   const circle = useRef(null)
-  const fragmentsRef = useRef([])
+  const laptopSection = useRef(null)
+  const laptopScene = useRef(null)
+  const laptop = useRef(null)
+  const laptopGlow = useRef(null)
+  const laptopCopy = useRef(null)
+  const laptopEyebrow = useRef(null)
+  const laptopTitle = useRef(null)
+  const laptopText = useRef(null)
+  const laptopBadge = useRef(null)
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -66,28 +56,97 @@ function App() {
         ease: 'none',
       })
 
+      gsap.set(laptop, {
+        transformPerspective: 1400,
+        transformOrigin: 'center center',
+        scale: 0.62,
+        x: 260,
+        y: 110,
+        rotateY: -24,
+        rotateX: 12,
+        rotateZ: 3,
+        opacity: 0,
+      })
+
+      gsap.set(laptopGlow, {
+        scale: 0.45,
+        opacity: 0,
+      })
+
+      gsap.set([laptopEyebrow, laptopTitle, laptopText, laptopBadge], {
+        opacity: 0,
+        y: 35,
+      })
+
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: '.slice-section',
+          trigger: laptopSection.current,
           start: 'top top',
-          end: '+=240%',
+          end: '+=320%',
           scrub: 1,
           pin: true,
+          anticipatePin: 1,
         },
       })
 
-      tl.to(fragmentsRef.current, {
-        x: (index) => fragments[index].x,
-        y: (index) => fragments[index].y,
-        rotation: (index) => fragments[index].r,
-        scale: 0.72,
-        duration: 1,
-        ease: 'power2.inOut',
-        stagger: {
-          each: 0.025,
-          from: 'center',
-        },
+      tl.to(laptop, {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        scale: 0.82,
+        rotateY: -10,
+        rotateX: 5,
+        rotateZ: 0,
+        duration: 0.8,
+        ease: 'power3.out',
       })
+        .to(laptopGlow, {
+          scale: 1,
+          opacity: 1,
+          duration: 0.8,
+          ease: 'power2.out',
+        }, '<')
+        .to([laptopEyebrow, laptopTitle, laptopText, laptopBadge], {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          stagger: 0.08,
+          ease: 'power3.out',
+        })
+        .to(laptop, {
+          scale: 1.08,
+          x: 20,
+          y: -10,
+          rotateY: 0,
+          rotateX: 0,
+          duration: 1,
+          ease: 'power2.inOut',
+        })
+        .to(laptopGlow, {
+          scale: 1.25,
+          opacity: 0.7,
+          duration: 1,
+          ease: 'none',
+        }, '<')
+        .to(laptopCopy, {
+          x: -35,
+          opacity: 0.55,
+          duration: 0.7,
+          ease: 'power2.inOut',
+        })
+        .to(laptop, {
+          scale: 1.34,
+          x: 0,
+          y: -35,
+          rotateZ: -1,
+          duration: 1,
+          ease: 'power3.inOut',
+        })
+        .to(laptopGlow, {
+          scale: 1.5,
+          opacity: 0.45,
+          duration: 1,
+        }, '<')
     }, app)
 
     return () => ctx.revert()
@@ -126,43 +185,29 @@ function App() {
         </div>
       </section>
 
-      <section className="slice-section">
-        <div className="slice-heading">
-          <p>03 · Wig Showcase</p>
-          <h2>Made to move.</h2>
-          <span>Keep scrolling ↓</span>
+      <section ref={laptopSection} className="laptop-section">
+        <div ref={laptopCopy} className="laptop-copy">
+          <p ref={laptopEyebrow}>04 · PhoneVertex</p>
+          <h2 ref={laptopTitle}>Something bigger is loading.</h2>
+          <p ref={laptopText}>
+            The same laptop concept from your PhoneVertex Coming Soon section,
+            rebuilt as a scroll-driven GSAP experience.
+          </p>
+          <span ref={laptopBadge}>Keep scrolling ↓</span>
         </div>
 
-        <div className="slice-stage">
-          {fragments.map((fragment, index) => (
-            <div
-              key={index}
-              ref={(element) => {
-                fragmentsRef.current[index] = element
-              }}
-              className="image-slice"
-              style={{
-                position: 'absolute',
-                inset: 0,
-                width: '100%',
-                height: '100%',
-                backgroundImage: `url(${wigImage})`,
-                backgroundSize: '100% 100%',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-                clipPath: fragment.clip,
-                borderRadius: 0,
-                willChange: 'transform',
-                transformOrigin: 'center',
-              }}
-            />
-          ))}
+        <div ref={laptopScene} className="laptop-scene-gsap">
+          <div ref={laptopGlow} className="laptop-glow-gsap" />
+          <div ref={laptop} className="laptop-gsap">
+            <img src={laptopImage} alt="Laptop showing a modern workspace" />
+            <div className="laptop-shine-gsap" />
+          </div>
         </div>
       </section>
 
       <section className="end-section">
-        <p>Your first wig animation.</p>
-        <h2>Now imagine this with your own brand.</h2>
+        <p>Scroll-driven product presentation.</p>
+        <h2>Now imagine this inside the real PhoneVertex site.</h2>
       </section>
     </main>
   )
