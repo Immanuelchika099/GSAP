@@ -5,26 +5,25 @@ import './App.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const controllerImage =
-  'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Gamer_Controller.jpg/1280px-Gamer_Controller.jpg'
+const wigImage = 'https://pngimg.com/d/wig_PNG6.png'
 
 const fragments = [
-  { clip: 'polygon(0 0, 25% 0, 24% 25%, 0 28%)', x: -360, y: -250, r: -18 },
-  { clip: 'polygon(25% 0, 50% 0, 48% 25%, 24% 25%)', x: -130, y: -330, r: 14 },
-  { clip: 'polygon(50% 0, 75% 0, 76% 25%, 48% 25%)', x: 120, y: -310, r: -12 },
-  { clip: 'polygon(75% 0, 100% 0, 100% 28%, 76% 25%)', x: 370, y: -230, r: 20 },
-  { clip: 'polygon(0 28%, 24% 25%, 25% 50%, 0 52%)', x: -430, y: -40, r: 11 },
-  { clip: 'polygon(24% 25%, 48% 25%, 50% 50%, 25% 50%)', x: -150, y: -80, r: -8 },
-  { clip: 'polygon(48% 25%, 76% 25%, 75% 50%, 50% 50%)', x: 160, y: -70, r: 9 },
-  { clip: 'polygon(76% 25%, 100% 28%, 100% 52%, 75% 50%)', x: 430, y: -20, r: -14 },
-  { clip: 'polygon(0 52%, 25% 50%, 24% 76%, 0 74%)', x: -390, y: 80, r: -16 },
-  { clip: 'polygon(25% 50%, 50% 50%, 48% 76%, 24% 76%)', x: -120, y: 90, r: 10 },
-  { clip: 'polygon(50% 50%, 75% 50%, 76% 76%, 48% 76%)', x: 120, y: 100, r: -11 },
-  { clip: 'polygon(75% 50%, 100% 52%, 100% 74%, 76% 76%)', x: 400, y: 70, r: 16 },
-  { clip: 'polygon(0 74%, 24% 76%, 25% 100%, 0 100%)', x: -340, y: 290, r: 17 },
-  { clip: 'polygon(24% 76%, 48% 76%, 50% 100%, 25% 100%)', x: -100, y: 320, r: -13 },
-  { clip: 'polygon(48% 76%, 76% 76%, 75% 100%, 50% 100%)', x: 130, y: 310, r: 12 },
-  { clip: 'polygon(76% 76%, 100% 74%, 100% 100%, 75% 100%)', x: 360, y: 270, r: -18 },
+  { clip: 'polygon(0 0, 25% 0, 23% 24%, 0 27%)', x: -300, y: -260, r: -16 },
+  { clip: 'polygon(25% 0, 50% 0, 49% 24%, 23% 24%)', x: -95, y: -330, r: 11 },
+  { clip: 'polygon(50% 0, 75% 0, 77% 24%, 49% 24%)', x: 110, y: -310, r: -9 },
+  { clip: 'polygon(75% 0, 100% 0, 100% 27%, 77% 24%)', x: 320, y: -230, r: 18 },
+  { clip: 'polygon(0 27%, 23% 24%, 25% 51%, 0 50%)', x: -390, y: -40, r: 12 },
+  { clip: 'polygon(23% 24%, 49% 24%, 50% 51%, 25% 51%)', x: -125, y: -65, r: -7 },
+  { clip: 'polygon(49% 24%, 77% 24%, 75% 51%, 50% 51%)', x: 125, y: -55, r: 8 },
+  { clip: 'polygon(77% 24%, 100% 27%, 100% 50%, 75% 51%)', x: 390, y: -25, r: -13 },
+  { clip: 'polygon(0 50%, 25% 51%, 24% 76%, 0 74%)', x: -360, y: 85, r: -15 },
+  { clip: 'polygon(25% 51%, 50% 51%, 49% 76%, 24% 76%)', x: -110, y: 95, r: 9 },
+  { clip: 'polygon(50% 51%, 75% 51%, 76% 76%, 49% 76%)', x: 115, y: 105, r: -10 },
+  { clip: 'polygon(75% 51%, 100% 50%, 100% 74%, 76% 76%)', x: 360, y: 70, r: 15 },
+  { clip: 'polygon(0 74%, 24% 76%, 25% 100%, 0 100%)', x: -290, y: 270, r: 17 },
+  { clip: 'polygon(24% 76%, 49% 76%, 50% 100%, 25% 100%)', x: -90, y: 315, r: -12 },
+  { clip: 'polygon(49% 76%, 76% 76%, 75% 100%, 50% 100%)', x: 105, y: 300, r: 13 },
+  { clip: 'polygon(76% 76%, 100% 74%, 100% 100%, 75% 100%)', x: 300, y: 250, r: -19 },
 ]
 
 function App() {
@@ -71,7 +70,7 @@ function App() {
         scrollTrigger: {
           trigger: '.slice-section',
           start: 'top top',
-          end: '+=220%',
+          end: '+=240%',
           scrub: 1,
           pin: true,
         },
@@ -129,8 +128,8 @@ function App() {
 
       <section className="slice-section">
         <div className="slice-heading">
-          <p>03 · Image Reconstruction</p>
-          <h2>Scatter it.</h2>
+          <p>03 · Wig Showcase</p>
+          <h2>Made to move.</h2>
           <span>Keep scrolling ↓</span>
         </div>
 
@@ -147,7 +146,7 @@ function App() {
                 inset: 0,
                 width: '100%',
                 height: '100%',
-                backgroundImage: `url(${controllerImage})`,
+                backgroundImage: `url(${wigImage})`,
                 backgroundSize: '100% 100%',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
@@ -162,8 +161,8 @@ function App() {
       </section>
 
       <section className="end-section">
-        <p>The controller has been scattered.</p>
-        <h2>Now we can reverse it.</h2>
+        <p>Your first wig animation.</p>
+        <h2>Now imagine this with your own brand.</h2>
       </section>
     </main>
   )
