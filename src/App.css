@@ -25,7 +25,7 @@ main {
 .hero-section,
 .animation-section,
 .motion-section,
-.slice-section,
+.laptop-section,
 .end-section {
   min-height: 100vh;
   display: flex;
@@ -102,7 +102,7 @@ h1 {
 .animation-card h2,
 .motion-content h2,
 .end-section h2,
-.slice-heading h2 {
+.laptop-copy h2 {
   font-size: clamp(3rem, 7vw, 6rem);
   line-height: 0.95;
   letter-spacing: -0.06em;
@@ -141,73 +141,105 @@ h1 {
   max-width: 600px;
 }
 
-.slice-section {
-  background: #050505;
+.laptop-section {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 72% 50%, rgba(91, 124, 250, 0.2), transparent 30%),
+    radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.06), transparent 28%),
+    #070a12;
   overflow: hidden;
-  flex-direction: column;
-  gap: 45px;
+  perspective: 1400px;
 }
 
-.slice-heading {
+.laptop-copy {
   position: absolute;
-  top: 9vh;
   left: 7vw;
-  z-index: 5;
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(430px, 36vw);
+  z-index: 3;
 }
 
-.slice-heading p,
-.slice-heading span {
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
+.laptop-copy > p:first-child {
+  color: #8da4ff;
   font-size: 11px;
-  color: #999;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 800;
 }
 
-.slice-heading h2 {
-  margin: 12px 0;
+.laptop-copy h2 {
+  max-width: 650px;
 }
 
-.slice-stage {
-  width: min(1000px, 88vw);
-  height: min(62vw, 560px);
-  max-height: 70vh;
-  position: relative;
+.laptop-copy > p:not(:first-child) {
+  color: rgba(255, 255, 255, 0.58);
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+.laptop-copy span {
+  display: inline-flex;
+  margin-top: 30px;
+  padding: 10px 15px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 11px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  backdrop-filter: blur(12px);
+}
+
+.laptop-scene-gsap {
+  position: absolute;
+  right: -3vw;
+  width: min(760px, 62vw);
+  height: min(560px, 58vh);
   display: flex;
-  overflow: visible;
-  perspective: 1200px;
+  align-items: center;
+  justify-content: center;
+  perspective: 1400px;
 }
 
-.image-slice {
+.laptop-glow-gsap {
+  position: absolute;
+  width: 65%;
+  height: 55%;
+  border-radius: 50%;
+  background: rgba(91, 124, 250, 0.32);
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+.laptop-gsap {
   position: relative;
-  width: 20%;
-  height: 100%;
-  flex-shrink: 0;
-  background-size: 500% 100%;
-  background-repeat: no-repeat;
-  will-change: transform;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  width: min(700px, 92%);
+  border-radius: 20px;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  box-shadow:
+    0 40px 100px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.14);
+  will-change: transform, opacity;
 }
 
-.image-slice:nth-child(1) {
-  background-position: 0% center !important;
-  border-radius: 24px 0 0 24px;
+.laptop-gsap img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  filter: saturate(0.85) contrast(1.06) brightness(0.76);
 }
 
-.image-slice:nth-child(2) {
-  background-position: 25% center !important;
-}
-
-.image-slice:nth-child(3) {
-  background-position: 50% center !important;
-}
-
-.image-slice:nth-child(4) {
-  background-position: 75% center !important;
-}
-
-.image-slice:nth-child(5) {
-  background-position: 100% center !important;
-  border-radius: 0 24px 24px 0;
+.laptop-shine-gsap {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(115deg, rgba(255, 255, 255, 0.16), transparent 25%, transparent 62%, rgba(91, 124, 250, 0.12)),
+    linear-gradient(to top, rgba(0, 0, 0, 0.35), transparent 45%);
 }
 
 .end-section {
@@ -225,6 +257,18 @@ h1 {
 
 .end-section h2 {
   max-width: 900px;
+}
+
+@media (max-width: 900px) {
+  .laptop-copy {
+    left: 6vw;
+    width: 42vw;
+  }
+
+  .laptop-scene-gsap {
+    right: -10vw;
+    width: 68vw;
+  }
 }
 
 @media (max-width: 700px) {
@@ -246,16 +290,38 @@ h1 {
     margin-left: 0;
   }
 
-  .slice-stage {
-    width: 92vw;
-    height: 60vw;
+  .laptop-section {
+    align-items: flex-start;
+    padding-top: 12vh;
   }
 
-  .slice-heading {
-    left: 5vw;
+  .laptop-copy {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+    width: 90vw;
+    text-align: center;
   }
 
-  .slice-heading h2 {
-    font-size: 3rem;
+  .laptop-copy h2 {
+    font-size: 3.2rem;
+  }
+
+  .laptop-copy > p:not(:first-child) {
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .laptop-scene-gsap {
+    right: auto;
+    bottom: 2vh;
+    width: 110vw;
+    height: 45vh;
+  }
+
+  .laptop-gsap {
+    width: 92%;
   }
 }
